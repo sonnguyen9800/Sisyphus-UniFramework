@@ -1,0 +1,3 @@
+[submodule "UnityCommunity/UnitySingleton"]
+	path = UnityCommunity/UnitySingleton
+	url = https://github.com/UnityCommunity/UnitySingleton.git
