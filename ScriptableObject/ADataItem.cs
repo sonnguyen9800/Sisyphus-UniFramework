@@ -6,7 +6,7 @@ namespace SisyphusLab.Utils
 {
     public abstract class ADataItem<T>
     {
-        public string Id;
+        public int Id;
         public T Data;
     }
 

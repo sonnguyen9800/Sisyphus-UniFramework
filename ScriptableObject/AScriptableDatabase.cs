@@ -9,11 +9,11 @@ namespace SisyphusLab.Utils
     {
         [SerializeField] List<T> _data;
 
-        Dictionary<string, T1> _dataDict = new Dictionary<string, T1>();
+        Dictionary<int, T1> _dataDict = new Dictionary<int, T1>();
 
-        private void Awake()
+        private void OnEnable()
         {
-            _data = new List<T>();
+            _dataDict.Clear();
             foreach (var item in _data)
             {
                 if (_dataDict.ContainsKey(item.Id))
@@ -23,6 +23,11 @@ namespace SisyphusLab.Utils
         }
 
 
+
+        public T1 GetById(int id)
+        {
+            return _dataDict[id];
+        }
     }
 
 }
