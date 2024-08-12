@@ -1,7 +1,7 @@
 namespace SisyphusLab
 {
-    public interface IState<TContext> 
+    public interface IState<TController> 
     {
-        void Handle(TContext context);
+        void Handle(TController context);
     }
 }

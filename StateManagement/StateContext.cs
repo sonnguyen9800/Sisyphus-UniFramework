@@ -2,15 +2,25 @@
 namespace SisyphusLab
 {
     public abstract class StateContext<TState, TController, TSelfContext> 
-        where TState : IState<TSelfContext>
+        where TState : IState<TController>
     {
 
         public TState CurrentState { get; }
 
-        public TController Controller { get; set; }
+        public TController _controller;
+        public TController Controller { get => _controller; }
 
-        public void Transition() {}
-        public void Transition(TState state) { }
+        //Constructor
+        public StateContext(TController controller)
+        {
+            _controller = controller;
+        }
+        public void Transition() {
+            CurrentState.Handle(_controller);
+        }
+        public void Transition(TState state) {
+        
+        }
     }
 
 }
