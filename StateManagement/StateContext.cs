@@ -5,21 +5,25 @@ namespace SisyphusLab
         where TState : IState<TController>
     {
 
-        public TState CurrentState { get; }
-
-        public TController _controller;
+        public TState CurrentState { get; private set; }
         public TController Controller { get => _controller; }
 
+        private TController _controller;
+
         //Constructor
-        public StateContext(TController controller)
+        public StateContext(TController controller, TState originalState)
         {
             _controller = controller;
+            CurrentState = originalState;
         }
         public void Transition() {
+
             CurrentState.Handle(_controller);
         }
         public void Transition(TState state) {
-        
+            CurrentState.Exit(_controller);
+            CurrentState = state;
+            CurrentState.Handle(_controller);
         }
     }
 
