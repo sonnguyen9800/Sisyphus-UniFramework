@@ -16,7 +16,21 @@ namespace SisyphusLab
             }
             Events[eventType] += listener;
         }
-
+        /// <summary>
+        /// Subscribe only onced, then auto unscribe
+        /// </summary>
+        /// <typeparam name="T1">The type of event key used to distinguish between different events.</typeparam>
+        public void SubscribeOnced(T1 eventType, EventHandler listener)
+        {
+            EventHandler eventWrapper = null;
+            eventWrapper = (sender, args) =>
+            {
+                listener(sender, args);
+                Unsubscribe(eventType, eventWrapper);
+            };
+            Subscribe(eventType, eventWrapper);
+        }
+        
         public void Unsubscribe(T1 eventType, EventHandler listener)
         {
             if (Events.ContainsKey(eventType))
