@@ -19,6 +19,10 @@ namespace SisyphusLab.Matrices
             this.m01 = vector.y;
         }
 
+        public Vector2Int Vector
+        {
+            get => new Vector2Int(m00, m01);
+        }
         public Matrix1x2Int Multiply(Matrix2x2Int other)
         {
             return new Matrix1x2Int(

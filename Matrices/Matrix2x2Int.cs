@@ -1,3 +1,6 @@
+using System;
+using UnityEngine;
+
 namespace SisyphusLab.Matrices
 {
     public struct Matrix2x2Int
@@ -31,6 +34,24 @@ namespace SisyphusLab.Matrices
                 (this.m10 * other.m01) + (this.m11 * other.m11)
             );
         }
-        
+
+        public static Matrix2x2Int CreateRotationMatrix(float angleDegrees)
+        {
+            // Convert the angle to radians
+            float angleRadians = angleDegrees * (float)Math.PI / 180f;
+
+            // Calculate the elements of the rotation matrix
+            float cosTheta = (float)Mathf.Cos(angleRadians);
+            float sinTheta = (float)Mathf.Sin(angleRadians);
+
+            // IMPORTANT: Rounding to int to match Matrix2x2Int structure, may lose precision.
+            int m00 = (int)Mathf.Round(cosTheta);
+            int m01 = (int)Mathf.Round(-sinTheta);
+            int m10 = (int)Mathf.Round(sinTheta);
+            int m11 = (int)Mathf.Round(cosTheta);
+
+            // Return the rounded rotation matrix
+            return new Matrix2x2Int(m00, m01, m10, m11);
+        }
     }
 }
