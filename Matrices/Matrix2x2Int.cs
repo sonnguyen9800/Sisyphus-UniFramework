@@ -5,6 +5,22 @@ namespace SisyphusLab.Matrices
 {
     public struct Matrix2x2Int
     {
+        public static Matrix2x2Int FlipVerticalMatrix
+        {
+            get
+            {
+                return new Matrix2x2Int(1, 0, 0, -1);
+            }
+        }
+        public static Matrix2x2Int FlipHorizontalMatrix
+        {
+            get
+            {
+                return new Matrix2x2Int(0, 1, 1, 0);
+            }
+        }
+        
+        
         public int m00, m01;
         public int m10, m11;
     
@@ -53,5 +69,7 @@ namespace SisyphusLab.Matrices
             // Return the rounded rotation matrix
             return new Matrix2x2Int(m00, m01, m10, m11);
         }
+        
+        
     }
 }
