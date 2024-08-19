@@ -4,6 +4,7 @@ using SisyphusLab.Data;
 
 namespace SisyphusLab.Floodfill
 {
+    
     public static class Floodfill
     {
         

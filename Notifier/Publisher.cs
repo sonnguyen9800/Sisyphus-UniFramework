@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 
 // Original reference: https://learn.microsoft.com/en-us/dotnet/standard/events/observer-design-pattern
-
+// TODO: improve, test, verify
 namespace SisyphusLab.Notifier
 {
     public class Publisher<T, TParam> : ISisyphusObservable<T, TParam> where T : IComparable<T>
