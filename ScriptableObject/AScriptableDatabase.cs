@@ -7,7 +7,7 @@ namespace SisyphusLab.Utils
 {
     public abstract class AScriptableDatabase<T, T1> : ScriptableObject where T : ADataItem<T1>
     {
-        [SerializeField] List<T> _data;
+        [SerializeField] protected List<T> _data;
 
         Dictionary<int, T1> _dataDict = new Dictionary<int, T1>();
 
