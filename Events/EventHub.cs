@@ -4,7 +4,7 @@ using UnityCommunity.UnitySingleton;
 
 namespace SisyphusLab
 {
-    public  class EventHub<T1> : Singleton<EventHub<T1>>
+    public  class EventHub<T1> : Singleton<EventHub<T1>> where T1: System.Enum
     {
         private readonly IDictionary<T1, EventHandler> Events = new Dictionary<T1, EventHandler>();
 
