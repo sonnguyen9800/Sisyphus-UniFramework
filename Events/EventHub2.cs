@@ -7,13 +7,13 @@ namespace SisyphusLab
 
     public class EventHub< T1, T2> : Singleton<EventHub<T1, T2>> 
         where T1 : Enum
-        where T2 : EventArgs 
+        where T2 : struct 
     {
-        public delegate void SEventHandler(object sender, T2 e);
+        public delegate void SisyphusEventHandler(object sender, T2 e);
 
-        private readonly IDictionary<T1, SEventHandler> Events = new Dictionary<T1, SEventHandler>();
+        private readonly IDictionary<T1, SisyphusEventHandler> Events = new Dictionary<T1, SisyphusEventHandler>();
 
-        public void Subscribe(T1 eventType, SEventHandler listener)
+        public void Subscribe(T1 eventType, SisyphusEventHandler listener)
         {
             if (!Events.ContainsKey(eventType))
             {
@@ -22,8 +22,17 @@ namespace SisyphusLab
 
             Events[eventType] += listener;
         }
-
-        public void Unsubscribe(T1 eventType, SEventHandler listener)
+        public void SubscribeOnced(T1 eventType, SisyphusEventHandler listener)
+        {
+            SisyphusEventHandler eventWrapper = null;
+            eventWrapper = (sender, args) =>
+            {
+                listener(sender, args);
+                Unsubscribe(eventType, eventWrapper);
+            };
+            Subscribe(eventType, eventWrapper);
+        }
+        public void Unsubscribe(T1 eventType, SisyphusEventHandler listener)
         {
             if (Events.ContainsKey(eventType))
             {
@@ -35,7 +44,7 @@ namespace SisyphusLab
         {
             if (Events.ContainsKey(eventType) && Events[eventType] != null)
             {
-                Events[eventType]?.Invoke(null, null);
+                Events[eventType]?.Invoke(null, default(T2));
             }
         }
 
