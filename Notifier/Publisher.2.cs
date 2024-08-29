@@ -1,7 +1,27 @@
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using FAW.Core;
+
 namespace SisyphusLab.Notifier
 {
-    public class Publisher_2
+    public class Publisher<T> where T : System.Enum
     {
-        
+        private readonly HashSet<IObserver<T>> _observers = new();
+        public IDisposable Subscribe(IObserver<T> observer)
+        {
+            if (_observers.Add(observer))
+                return new Unsubscriber<T>(_observers, observer);
+            return null;
+        }
+
+        public void Notify(T command)
+        {
+            // Use parallel programing to boots performance
+            Parallel.ForEach(_observers, (observer) =>
+            {
+                observer.OnNext(command);
+            });
+        }
     }
 }
