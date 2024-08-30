@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using FAW.Core;
 
@@ -25,7 +26,7 @@ namespace SisyphusLab.Notifier
         }
         public void NotifySequence(T command)
         {
-            foreach (var iter in _observers)
+            foreach (var iter in _observers.ToList())
             {
                 iter.OnNext(command);
             }
