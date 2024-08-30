@@ -18,9 +18,9 @@ namespace SisyphusLab
         }
 
         public void Transition(TState state) {
-            CurrentState.Exit(_controller);
+            CurrentState.Exit();
             CurrentState = state;
-            CurrentState.Handle(_controller);
+            CurrentState.Handle();
         }
     }
 
