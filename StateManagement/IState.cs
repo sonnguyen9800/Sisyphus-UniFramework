@@ -2,7 +2,7 @@ namespace SisyphusLab
 {
     public interface IState<TController> 
     {
-        void Handle(TController context);
+        void Handle(TController controller);
         void Exit(TController context);
     }
 

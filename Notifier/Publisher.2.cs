@@ -15,13 +15,20 @@ namespace SisyphusLab.Notifier
             return null;
         }
 
-        public void Notify(T command)
+        public void NotifyParallel(T command)
         {
             // Use parallel programing to boots performance
             Parallel.ForEach(_observers, (observer) =>
             {
                 observer.OnNext(command);
             });
+        }
+        public void NotifySequence(T command)
+        {
+            foreach (var iter in _observers)
+            {
+                iter.OnNext(command);
+            }
         }
     }
 }
