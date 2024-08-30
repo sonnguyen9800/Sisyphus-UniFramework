@@ -2,8 +2,8 @@ namespace SisyphusLab
 {
     public interface IState<TController> 
     {
-        void Handle(TController controller);
-        void Exit(TController context);
+        void Handle();
+        void Exit();
     }
 
     public abstract class State<TController>
