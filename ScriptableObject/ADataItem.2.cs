@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace SisyphusLab.Utils
 {
-    public abstract class ADataItem<T, TEnum>
+    public abstract class ADataItem<TEnum,T>
     where TEnum : System.Enum
     {
         public TEnum Type;

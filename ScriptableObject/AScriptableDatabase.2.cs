@@ -1,12 +1,12 @@
 ﻿using System.Collections.Generic;
+using SisyphusLab.Utils;
 using UnityEngine;
 
-
-namespace SisyphusLab.Utils
+namespace SisyphusLab.ScriptableObject
 {
-    public abstract class AScriptableDatabase<T, TEnum, T1> : ScriptableObject
+    public abstract class AScriptableDatabase<TEnum,T, T1> : UnityEngine.ScriptableObject
         where TEnum : System.Enum 
-        where T : ADataItem<T1, TEnum>
+        where T : ADataItem<TEnum,T1 >
 
     {
         [SerializeField] protected List<T> _data;

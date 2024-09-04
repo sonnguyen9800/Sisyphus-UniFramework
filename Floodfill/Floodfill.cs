@@ -8,42 +8,58 @@ namespace SisyphusLab.Floodfill
     
     public static class Floodfill
     {
-        
+        public static int Count = 0;
         public static HashSet<IFloodFill> GetAllNode(IFloodFill firstNode)
         {
             HashSet<IFloodFill> allNodes = new HashSet<IFloodFill>();
             allNodes.Add(firstNode);
             UniqueStack<IFloodFill> potentialBag = new UniqueStack<IFloodFill>();
             potentialBag.Push(firstNode);
-            ProgressFlooding(registeredSet: ref allNodes, potentialSet: ref potentialBag);
+            HashSet<IFloodFill> removedSet = new();
+
+            ProgressFlooding(registeredSet: ref allNodes, potentialSet: ref potentialBag, removedSet: ref removedSet);
             return allNodes;
         }
         public static HashSet<T> GetAllNode<T>(IFloodFill firstNode) where T : IFloodFill
         {
-            HashSet<IFloodFill> allNodes = new HashSet<IFloodFill>();
-            allNodes.Add(firstNode);
-            UniqueStack<IFloodFill> potentialBag = new UniqueStack<IFloodFill>();
+            Count = 0;
+            HashSet<IFloodFill> allNodes = new() { firstNode };
+            UniqueStack<IFloodFill> potentialBag = new();
             potentialBag.Push(firstNode);
-            ProgressFlooding(registeredSet: ref allNodes, potentialSet: ref potentialBag);
+            HashSet<IFloodFill> removedSet = new();
+            ProgressFlooding(
+                registeredSet: ref allNodes, 
+                potentialSet: ref potentialBag, 
+                removedSet: ref removedSet);
             return allNodes.Cast<T>().ToHashSet();;
         }
         private static (HashSet<IFloodFill>, UniqueStack<IFloodFill>) ProgressFlooding(
             ref HashSet<IFloodFill> registeredSet, 
             ref UniqueStack<IFloodFill> potentialSet, 
-            object param = null)
+            ref HashSet<IFloodFill> removedSet,
+
+        object param = null)
         {
 
             // define base-state
-            if (potentialSet.Count == 0)
+            if (potentialSet.Count == 0 || Count == 100)
             {
                 return (registeredSet, potentialSet);
             }
 
             var firstState = potentialSet.Pop();
             var allConnected = firstState.TryTraverse(param);
+            removedSet.Add(firstState);
+            foreach (var item in removedSet)
+            {
+                allConnected.Remove(item);
+            }
+            
             potentialSet.AddRange(allConnected);
             registeredSet.AddRange(allConnected);
-            return ProgressFlooding(ref registeredSet, ref potentialSet);
+            Count++;
+            
+            return ProgressFlooding(ref registeredSet, ref potentialSet, ref removedSet);
         }
     }
 
