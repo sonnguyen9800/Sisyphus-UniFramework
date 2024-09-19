@@ -6,6 +6,10 @@ using FAW.Core;
 
 namespace SisyphusLab.Notifier
 {
+    /// <summary>
+    /// Basic publisher. Has no support for param when Notify()
+    /// </summary>
+    /// <typeparam name="T">Enum for Notify</typeparam>
     public class Publisher<T> where T : System.Enum
     {
         private readonly HashSet<IObserver<T>> _observers = new();
@@ -31,5 +35,15 @@ namespace SisyphusLab.Notifier
                 iter.OnNext(command);
             }
         }
+    }
+    internal sealed class Unsubscriber<T> : IDisposable
+    {
+        private readonly ISet<IObserver<T>> _observers;
+        private readonly IObserver<T> _observer;
+
+        internal Unsubscriber(ISet<IObserver<T>> observers,
+            IObserver<T> observer) => (_observers, _observer) = (observers, observer);
+
+        public void Dispose() => _observers.Remove(_observer);
     }
 }
