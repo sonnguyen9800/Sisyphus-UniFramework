@@ -5,15 +5,15 @@ using UnityCommunity.UnitySingleton;
 namespace SisyphusLab
 {
 /// <summary>
-/// MonoSingleton
+/// MonoSingleton act as EventHub. 
 /// </summary>
 /// <typeparam name="T"></typeparam>
-/// <typeparam name="T1"></typeparam>
-/// <typeparam name="T2"></typeparam>
+/// <typeparam name="T1">Event Name (enum)</typeparam>
+/// <typeparam name="T2">Argument for events </typeparam>
     public class MonoSingletonEventHub<T, T1, T2> : MonoSingleton<T> 
         where T : MonoSingleton<T>
+        where T1 : Enum
         where T2 : EventArgs 
-        where T1 : System.Enum
     {
         public delegate void SEventHandler(object sender, T2 e);
 
