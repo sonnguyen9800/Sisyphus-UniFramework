@@ -10,7 +10,7 @@ namespace SisyphusLab
 /// <typeparam name="T"></typeparam>
 /// <typeparam name="T1">Event Name (enum)</typeparam>
 /// <typeparam name="T2">Argument for events </typeparam>
-    public class MonoSingletonEventHub<T, T1, T2> : MonoSingleton<T> 
+    public class MonoEventHub<T, T1, T2> : MonoSingleton<T> 
         where T : MonoSingleton<T>
         where T1 : Enum
         where T2 : EventArgs 
