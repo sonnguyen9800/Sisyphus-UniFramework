@@ -4,7 +4,12 @@ using UnityCommunity.UnitySingleton;
 
 namespace SisyphusLab
 {
-
+/// <summary>
+/// MonoSingleton
+/// </summary>
+/// <typeparam name="T"></typeparam>
+/// <typeparam name="T1"></typeparam>
+/// <typeparam name="T2"></typeparam>
     public class MonoSingletonEventHub<T, T1, T2> : MonoSingleton<T> 
         where T : MonoSingleton<T>
         where T2 : EventArgs 

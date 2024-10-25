@@ -4,7 +4,13 @@ using UnityCommunity.UnitySingleton;
 
 namespace SisyphusLab
 {
-
+    /// <summary>
+    /// This EventHub only applied for Singleton
+    /// 
+    /// </summary>
+    /// <typeparam name="T">The class of Hub</typeparam>
+    /// <typeparam name="T1">Signal Enum (enum)</typeparam>
+    /// <typeparam name="T2">Extra Parameter (struct)</typeparam>
     public class EventHub<T, T1, T2> : Singleton<T>
         where T: Singleton<T>,  new()
         where T1 : Enum

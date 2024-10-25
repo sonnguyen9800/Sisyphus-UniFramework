@@ -4,6 +4,10 @@ using UnityCommunity.UnitySingleton;
 
 namespace SisyphusLab
 {
+    /// <summary>
+    /// Simple EventHub, this is a Singleton
+    /// </summary>
+    /// <typeparam name="T1">Notification signal</typeparam>
     public class EventHub<T1> : Singleton<EventHub<T1>> where T1: System.Enum
     {
         private readonly IDictionary<T1, EventHandler> Events = new Dictionary<T1, EventHandler>();

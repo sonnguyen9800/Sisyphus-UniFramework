@@ -5,7 +5,14 @@ using UnityCommunity.UnitySingleton;
 namespace SisyphusLab
 {
 
-    public class EventHub< T1, T2> : Singleton<EventHub<T1, T2>> 
+    /// <summary>
+    /// Advance EventHub, is a Singleton.
+    /// TODO: Not sure why this exist? Why this class co-exist with <see cref="EventHub{T,T1,T2}"/> this?
+    /// </summary>
+    /// <typeparam name="T1">The signal to be sent/recieve</typeparam>
+    /// <typeparam name="T2">Extra parameter of signal (struct)</typeparam>
+    public class EventHub< T1, T2> : Singleton<
+        EventHub<T1, T2>> 
         where T1 : Enum
         where T2 : struct 
     {
@@ -22,6 +29,7 @@ namespace SisyphusLab
 
             Events[eventType] += listener;
         }
+        // Subscribe once time only, Then unsubscribe from Publisher
         public void SubscribeOnced(T1 eventType, SisyphusEventHandler listener)
         {
             SisyphusEventHandler eventWrapper = null;
