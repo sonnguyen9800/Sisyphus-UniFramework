@@ -14,7 +14,7 @@ namespace SisyphusLab
         where T1 : Enum
     {
         private readonly IDictionary<T1, EventHandler> Events = new Dictionary<T1, EventHandler>();
-
+        
         public void Subscribe(T1 eventType, EventHandler listener)
         {
             if (!Events.ContainsKey(eventType))
