@@ -6,7 +6,7 @@ namespace SisyphusLab.ScriptableObject
 {
     public abstract class AScriptableDatabase<TEnum,T, T1> : UnityEngine.ScriptableObject
         where TEnum : System.Enum 
-        where T : ADataItem<TEnum,T1 >
+        where T : AResourcesItem<TEnum,T1 >
 
     {
         [SerializeField] protected List<T> _data;

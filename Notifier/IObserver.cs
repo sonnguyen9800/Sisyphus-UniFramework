@@ -15,5 +15,7 @@ namespace SisyphusLab.Notifier
         void OnError(Exception error);
 
         void OnNext(T value, TParam param);
+        
+        void Unsubscribe();
     }
 }
