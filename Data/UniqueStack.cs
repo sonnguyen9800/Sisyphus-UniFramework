@@ -1,10 +1,11 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 
 namespace SisyphusLab.Data
 {
     // TODO: improve this
-    public class UniqueStack<T>
+    public class UniqueStack<T> : IEnumerable<T>
     {
         private HashSet<T> _set = new HashSet<T>();
         private Stack<T> _stack = new Stack<T>();
@@ -56,6 +57,7 @@ namespace SisyphusLab.Data
                 Push(item);
             }
         }
-        
+        public IEnumerator<T> GetEnumerator() => _stack.GetEnumerator();
+        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
     }
 }
