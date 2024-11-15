@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Collections.Generic;
-// Original reference: https://learn.microsoft.com/en-us/dotnet/standard/events/observer-design-pattern
 
 
 namespace SisyphusLab.Notifier
@@ -28,15 +26,8 @@ namespace SisyphusLab.Notifier
                 return (new Unsubscriber<T,TParam>(_observers, newObserver), true);
             return (null, false);
         }
-        public IDisposable Subscribe(IObserver<T,TParam> newObserver)
-        {
-            if (_observers.Add(newObserver))
-                return new Unsubscriber<T,TParam>(_observers, newObserver);
-            return null;
-        }
-        public (IDisposable, bool) Subscribe(
-            IObserver<T, TParam> newObserver, 
-            IEnumerable<IObservable<T, TParam>.PublisherData<T, TParam>> predefinedIInfos)
+
+        public (IDisposable, bool) Subscribe(IObserver<T, TParam> newObserver, IEnumerable<PublisherData<T, TParam>> predefinedIInfos)
         {
             if (_observers.Add(newObserver))
             {
@@ -49,7 +40,13 @@ namespace SisyphusLab.Notifier
             return (null, false);
             
         }
-        
+
+        public IDisposable Subscribe(IObserver<T,TParam> newObserver)
+        {
+            if (_observers.Add(newObserver))
+                return new Unsubscriber<T,TParam>(_observers, newObserver);
+            return null;
+        }
 
         public virtual void Notify(TParam param)
         {

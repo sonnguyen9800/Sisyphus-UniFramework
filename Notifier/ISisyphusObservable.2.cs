@@ -3,6 +3,12 @@ using System.Collections.Generic;
 
 namespace SisyphusLab.Notifier
 {
+    public struct PublisherData<T, TParam>
+    {
+        public T Command;
+        public TParam Param;
+    }
+    
     /// <summary>
     /// Custom ISObservable that accept param
     /// </summary>
@@ -10,15 +16,9 @@ namespace SisyphusLab.Notifier
     /// <typeparam name="TParam">Extra param (struct</typeparam>
     // 
     public interface IObservable<T, TParam>
-        where T: System.Enum
+        where T: Enum
         where TParam : struct
     {
-        public struct PublisherData<T, TParam>
-        {
-            public T Command;
-            public TParam Param;
-        }
-
         protected ISet<IObserver<T,TParam>> Observers
         {
             get;
