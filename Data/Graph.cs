@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace SisyphusLab.Data
 {
@@ -16,11 +17,11 @@ namespace SisyphusLab.Data
             }
         }
 
-        public void AddEdge(T source, T edge)
+        public void AddLeaf(T parent, T leaf)
         {
-            AddVertex(source);
-            AddVertex(edge);
-            adjacencyList[source].Add(edge);
+            AddVertex(parent);
+            AddVertex(leaf);
+            adjacencyList[parent].Add(leaf);
         }
 
         public List<T> GetNeighbors(T vertex)
@@ -80,16 +81,14 @@ namespace SisyphusLab.Data
             if (!adjacencyList.ContainsKey(item))
                 return;
             extractedSet.Add(item);
-            adjacencyList.Remove(item);
             
             // Remove all edges referencing the removed vertex
-            foreach (var neighbors in adjacencyList.Values)
+            foreach (var neighbor in adjacencyList[item])
             {
-                foreach (var e in neighbors)
-                {
-                    Extract(e, extractedSet);
-                }
+                Extract(neighbor, extractedSet);
             }
+            adjacencyList.Remove(item);
+
             return;
         }
         public IEnumerator<T> GetEnumerator() => adjacencyList.Keys.GetEnumerator();
