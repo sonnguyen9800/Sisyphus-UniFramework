@@ -6,14 +6,9 @@ namespace SisyphusLab.Data
 {
     public class Graph<T> : ICollection<T>
     {
-        private Dictionary<T, List<T>> adjacencyList;
+        private readonly Dictionary<T, List<T>> adjacencyList = new();
 
-        public Graph()
-        {
-            adjacencyList = new Dictionary<T, List<T>>();
-        }
-
-        public void AddVertex(T vertex)
+        private void AddVertex(T vertex)
         {
             if (!adjacencyList.ContainsKey(vertex))
             {
@@ -21,11 +16,11 @@ namespace SisyphusLab.Data
             }
         }
 
-        public void AddEdge(T source, T destination)
+        public void AddEdge(T source, T edge)
         {
             AddVertex(source);
-            AddVertex(destination);
-            adjacencyList[source].Add(destination);
+            AddVertex(edge);
+            adjacencyList[source].Add(edge);
         }
 
         public List<T> GetNeighbors(T vertex)
