@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 
 namespace SisyphusLab.Data
 {
@@ -70,6 +71,28 @@ namespace SisyphusLab.Data
             return true;
         }
 
+        /// <summary>
+        /// Recursively extract an item and all sequential children (adjancency) into a HashSet
+        /// </summary>
+        /// <param name="item"></param>
+        /// <param name="extractedSet">All items that had been extracted (recursive)</param>
+        public void Extract(T item, HashSet<T> extractedSet)
+        {
+            if (!adjacencyList.ContainsKey(item))
+                return;
+            extractedSet.Add(item);
+            adjacencyList.Remove(item);
+            
+            // Remove all edges referencing the removed vertex
+            foreach (var neighbors in adjacencyList.Values)
+            {
+                foreach (var e in neighbors)
+                {
+                    Extract(e, extractedSet);
+                }
+            }
+            return;
+        }
         public IEnumerator<T> GetEnumerator() => adjacencyList.Keys.GetEnumerator();
 
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
