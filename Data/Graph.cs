@@ -7,27 +7,24 @@ namespace SisyphusLab.Data
 {
     public class Graph<T> : ICollection<T>
     {
-        private readonly Dictionary<T, List<T>> adjacencyList = new();
+        private readonly Dictionary<T, HashSet<T>> adjacencyList = new();
 
         private void AddVertex(T vertex)
         {
             if (!adjacencyList.ContainsKey(vertex))
             {
-                adjacencyList[vertex] = new List<T>();
+                adjacencyList[vertex] = new HashSet<T>();
             }
         }
 
         public void AddLeaf(T parent, T leaf)
         {
+            
             AddVertex(parent);
             AddVertex(leaf);
             adjacencyList[parent].Add(leaf);
         }
-
-        public List<T> GetNeighbors(T vertex)
-        {
-            return adjacencyList.ContainsKey(vertex) ? adjacencyList[vertex] : new List<T>();
-        }
+        
 
         // ICollection<T> Implementation
         public int Count => adjacencyList.Count;
@@ -60,15 +57,13 @@ namespace SisyphusLab.Data
         {
             if (!adjacencyList.ContainsKey(item)) return false;
 
-            adjacencyList.Remove(item);
-
             // Remove all edges referencing the removed vertex
             foreach (var neighbors in adjacencyList.Values)
             {
                 neighbors.Remove(item);
             }
 
-            return true;
+            return  adjacencyList.Remove(item);;
         }
 
         /// <summary>
@@ -76,20 +71,38 @@ namespace SisyphusLab.Data
         /// </summary>
         /// <param name="item"></param>
         /// <param name="extractedSet">All items that had been extracted (recursive)</param>
-        public void Extract(T item, HashSet<T> extractedSet)
+        private void Extract(T item, HashSet<T> extractedSet)
         {
             if (!adjacencyList.ContainsKey(item))
                 return;
             extractedSet.Add(item);
-            
             // Remove all edges referencing the removed vertex
+            
             foreach (var neighbor in adjacencyList[item])
             {
                 Extract(neighbor, extractedSet);
             }
-            adjacencyList.Remove(item);
+        }
 
-            return;
+        public HashSet<T> Extract(T item)
+        {
+           var extractedSet = new HashSet<T>();
+           Extract(item, extractedSet);
+           Remove(extractedSet: extractedSet);
+           return extractedSet;
+        }
+        
+        private void Remove(HashSet<T> extractedSet)
+        {
+            foreach (var item in extractedSet)
+            {
+                adjacencyList.Remove(item);
+            }
+
+            foreach (var adjList in adjacencyList.Values)
+            {
+                adjList.RemoveWhere(e => extractedSet.Contains(e));
+            }
         }
         public IEnumerator<T> GetEnumerator() => adjacencyList.Keys.GetEnumerator();
 
