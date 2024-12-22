@@ -10,11 +10,12 @@ namespace SisyphusLab.PersistentData
         public T Data { get; set; }
         bool encrypt = false;
 
-        protected APlayerData(string savePath, string modelKey)
+        protected APlayerData(string savePath, string modelKey, bool encrypt = true)
         {
             this._savePath = savePath;
             this._modelKey = modelKey;
-        }
+            this.encrypt = encrypt;
+        }   
         public void SaveData()
         {
             if (string.IsNullOrEmpty(_modelKey) || string.IsNullOrEmpty(_savePath))
@@ -33,5 +34,28 @@ namespace SisyphusLab.PersistentData
             
             
         }
+        
+        //called from scene using built in unity events
+        public void LoadData()
+        {
+            Gley.AllPlatformsSave.API.Load<T>(_savePath, DataWasLoaded, encrypt);
+        }
+
+
+        private void DataWasLoaded(T data, SaveResult result, string message)
+        {
+
+            if (result == SaveResult.EmptyData || result == SaveResult.Error)
+            {
+                Data = new T();
+                throw new Exception("Empty Data, Create new Data");
+            }
+
+            if (result == SaveResult.Success)
+            {
+                Data = data;
+            }
+        }
+
     }
 }
