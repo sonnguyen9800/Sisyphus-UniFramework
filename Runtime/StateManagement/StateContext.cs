@@ -15,8 +15,13 @@ namespace SisyphusLab
         {
             _controller = controller;
             CurrentState = originalState;
+
         }
 
+        public void ExecuteCurrentState()
+        {
+            CurrentState.Handle();
+        }
         public void Transition(TState state) {
             CurrentState.Exit();
             CurrentState = state;
