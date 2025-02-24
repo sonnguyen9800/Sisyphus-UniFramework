@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using SisyphusLab.Data;
+using SisyphusFramework.Data;
 
-namespace SisyphusLab.Floodfill
+namespace SisyphusFramework.Floodfill
 {
     public static class Floodfill
     {

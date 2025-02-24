@@ -1,8 +1,8 @@
 using System.Collections.Generic;
-using SisyphusLab.Utils;
+using SisyphusFramework.Utils;
 using UnityEngine;
 
-namespace SisyphusLab.ScriptableObject
+namespace SisyphusFramework.ScriptableObject
 {
     public abstract class AScriptableDatabase<T, T1> : UnityEngine.ScriptableObject where T : ADataItem<T1>
     {

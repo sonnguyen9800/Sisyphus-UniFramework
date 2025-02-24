@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace SisyphusLab.Utils
+namespace SisyphusFramework.Utils
 {
     public abstract class ADataItem<T>
     {

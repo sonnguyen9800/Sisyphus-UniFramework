@@ -1,4 +1,4 @@
-namespace SisyphusLab.PersistentData
+namespace SisyphusFramework.PersistentData
 {
     public class APlayerModel
     {

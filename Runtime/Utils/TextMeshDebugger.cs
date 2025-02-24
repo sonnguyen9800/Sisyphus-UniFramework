@@ -1,6 +1,6 @@
 ﻿using TMPro;
 
-namespace SisyphusLab.Utils
+namespace SisyphusFramework.Utils
 {
     public class TextMeshDebugger
     {

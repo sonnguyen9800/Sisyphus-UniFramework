@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityCommunity.UnitySingleton;
 
-namespace SisyphusLab
+namespace SisyphusFramework
 {
     /// <summary>
     /// MonoSingleton

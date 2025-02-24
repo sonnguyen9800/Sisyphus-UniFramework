@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityCommunity.UnitySingleton;
 
-namespace SisyphusLab
+namespace SisyphusFramework
 {
     public partial class SingletonEventHub<T1> : Singleton<SingletonEventHub<T1>>
     where T1: System.Enum

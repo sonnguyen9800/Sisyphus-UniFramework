@@ -1,4 +1,4 @@
-﻿namespace SisyphusLab.Composites
+﻿namespace SisyphusFramework.Composites
 {
     public interface IBehavior
     {

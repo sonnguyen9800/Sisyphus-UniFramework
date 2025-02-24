@@ -7,7 +7,7 @@ using Unity.VisualScripting;
 // Original reference: https://learn.microsoft.com/en-us/dotnet/standard/events/observer-design-pattern
 
 
-namespace SisyphusLab.Notifier
+namespace SisyphusFramework.Notifier
 {
     /// <summary>
     /// This Publisher had Observable to be sorted

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace SisyphusLab.UserInterface
+namespace SisyphusFramework.UserInterface
 {
     public abstract class ViewManager : MonoBehaviour
     {

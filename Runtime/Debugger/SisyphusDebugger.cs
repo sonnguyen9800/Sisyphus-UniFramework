@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-namespace SisyphusLab.Debugger
+namespace SisyphusFramework.Debugger
 {
     public static class SisyphusDebugger
     {

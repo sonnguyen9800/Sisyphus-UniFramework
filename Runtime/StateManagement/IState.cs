@@ -1,4 +1,4 @@
-namespace SisyphusLab
+namespace SisyphusFramework
 {
     public interface IState<TController> 
     {

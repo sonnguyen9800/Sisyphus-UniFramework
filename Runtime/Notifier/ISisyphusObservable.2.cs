@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace SisyphusLab.Notifier
+namespace SisyphusFramework.Notifier
 {
     public struct PublisherData<T, TParam>
     {

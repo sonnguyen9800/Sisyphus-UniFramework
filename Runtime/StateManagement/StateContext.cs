@@ -1,5 +1,5 @@
 
-namespace SisyphusLab
+namespace SisyphusFramework
 {
     public abstract class StateContext<TState, TController, TSelfContext> 
         where TState : IState<TController>

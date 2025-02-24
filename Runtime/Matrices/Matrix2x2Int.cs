@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace SisyphusLab.Matrices
+namespace SisyphusFramework.Matrices
 {
     public struct Matrix2x2Int
     {

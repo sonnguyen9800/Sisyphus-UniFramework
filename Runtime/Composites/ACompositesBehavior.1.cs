@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace SisyphusLab.Composites
+namespace SisyphusFramework.Composites
 {
     public abstract class ACompositeBehavior<T> where T : System.Enum
     {

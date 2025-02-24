@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace SisyphusLab.Notifier
+namespace SisyphusFramework.Notifier
 {
     /// <summary>
     /// IObserver with Param support. Command is supplied

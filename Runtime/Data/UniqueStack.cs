@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-namespace SisyphusLab.Data
+namespace SisyphusFramework.Data
 {
     // TODO: improve this
     public class UniqueStack<T> : IEnumerable<T>

@@ -1,4 +1,4 @@
-namespace SisyphusLab.UserInterface
+namespace SisyphusFramework.UserInterface
 {
     public interface IViewBehavior
     {

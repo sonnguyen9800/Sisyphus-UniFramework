@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace SisyphusLab.Notifier
+namespace SisyphusFramework.Notifier
 {
     // Custom ISObservable that accep order of notifier client
     public interface ISortedObservable<T, TParam> where T : IComparable<T>

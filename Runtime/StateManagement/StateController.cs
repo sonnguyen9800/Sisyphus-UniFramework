@@ -1,5 +1,5 @@
 
-namespace SisyphusLab
+namespace SisyphusFramework
 {
     public interface IStateController<TContext> 
     {

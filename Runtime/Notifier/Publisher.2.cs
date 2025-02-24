@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace SisyphusLab.Notifier
+namespace SisyphusFramework.Notifier
 {
     /// <summary>
     /// Basic publisher. Has no support for param when Notify()

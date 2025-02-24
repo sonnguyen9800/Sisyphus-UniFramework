@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace SisyphusLab.Data
+namespace SisyphusFramework.Data
 {
     public class Graph<T> : ICollection<T>
     {

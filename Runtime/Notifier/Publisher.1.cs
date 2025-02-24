@@ -4,11 +4,11 @@ using System.Linq;
 using System.Threading.Tasks;
 
 
-namespace SisyphusLab.Notifier
+namespace SisyphusFramework.Notifier
 {
     /// <summary>
     /// This Publisher had support for param. If you want Publisher to
-    /// have sorting observable by any order then use <see cref="SortedPublisher"/> instead
+    /// have sorting observable by any order then use <see cref="SortedPublisher{T,TParam}"/> instead
     /// </summary>
     /// <typeparam name="T">Command type to be notified (enum)</typeparam>
     /// <typeparam name="TParam">Param for each signal (struct)</typeparam>

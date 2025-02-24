@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace SisyphusLab.Notifier
+namespace SisyphusFramework.Notifier
 {
     public interface IPublisher<T> where T : System.Enum
     {
