@@ -14,6 +14,7 @@ namespace SisyphusFramework.ScriptableObject
         private void OnEnable()
         {
             _dataDict.Clear();
+            _data = new List<T>();
             foreach (var item in _data)
             {
                 if (_dataDict.ContainsKey(item.Id))
