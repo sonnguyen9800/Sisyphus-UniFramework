@@ -4,6 +4,12 @@ using UnityEngine;
 
 namespace SisyphusFramework.ScriptableObject
 {
+    /// <summary>
+    /// Scriptable Database with Enum for indexing
+    /// </summary>
+    /// <typeparam name="TEnum">TEnum must be Serializeable</typeparam>
+    /// <typeparam name="T"></typeparam>
+    /// <typeparam name="T1"></typeparam>
     public abstract class AScriptableDatabase<TEnum,T, T1> : UnityEngine.ScriptableObject
         where TEnum : System.Enum 
         where T : AResourcesItem<TEnum,T1 >

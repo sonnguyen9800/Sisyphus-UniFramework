@@ -4,6 +4,7 @@ using UnityEngine;
 
 namespace SisyphusFramework.ScriptableObject
 {
+
     public abstract class AScriptableDatabase<T, T1> : UnityEngine.ScriptableObject where T : ADataItem<T1>
     {
         [SerializeField] protected List<T> _data;
