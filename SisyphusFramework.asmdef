@@ -2,9 +2,7 @@
     "name": "SisyphusFramework",
     "rootNamespace": "SisyphusFramework",
     "references": [
-        "GUID:6055be8ebefd69e48b49212b09b47b2f",
-        "GUID:d0b10caa629c1bf43b90a0347a51e434",
-        "GUID:7006a8e32810e2b478dfd93569b37b9f"
+        "GUID:6055be8ebefd69e48b49212b09b47b2f"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
