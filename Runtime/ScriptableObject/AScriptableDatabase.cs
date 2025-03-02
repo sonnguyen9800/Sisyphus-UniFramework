@@ -13,8 +13,10 @@ namespace SisyphusFramework.ScriptableObject
 
         private void OnEnable()
         {
+            hideFlags = HideFlags.DontUnloadUnusedAsset; // Prevents Unity from unloading this ScriptableObject
+
             _dataDict.Clear();
-            _data = new List<T>();
+            if (_data == null) return; // Ensure _data is not null
             foreach (var item in _data)
             {
                 if (_dataDict.ContainsKey(item.Id))
