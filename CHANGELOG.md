@@ -1,4 +1,6 @@
 ﻿<h1> Change log </h1>
+0.0.42
+* Fix bug Task in Tutorial.cs
 
 0.0.41
 * fix bug PopupManager, check Dotween exist
