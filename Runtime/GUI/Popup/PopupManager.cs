@@ -614,12 +614,12 @@ namespace SisyphusFramework.GUI.Popup
     {
         UniTaskCompletionSource<bool> tcs = new UniTaskCompletionSource<bool>();
         CanvasGroup canvasGroup = screen.GetComponent<CanvasGroup>() ?? screen.AddComponent<CanvasGroup>();
-        // canvasGroup.DOFade(0, fadeDuration).OnComplete(() =>
-        // {
-        //     Destroy(screen);
-        //     _state = State.Ready;
-        //     tcs.TrySetResult(true);
-        // });
+        canvasGroup.DOFade(0, fadeDuration).OnComplete(() =>
+        {
+            Destroy(screen);
+            _state = State.Ready;
+            tcs.TrySetResult(true);
+        });
 
         await tcs.Task;
 
