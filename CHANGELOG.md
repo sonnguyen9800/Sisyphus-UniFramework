@@ -1,5 +1,8 @@
 ﻿<h1> Change log </h1>
 
+0.0.41
+* fix bug PopupManager, check Dotween exist
+
 0.0.40
 * Add Popup System
 * Add Tutorial System

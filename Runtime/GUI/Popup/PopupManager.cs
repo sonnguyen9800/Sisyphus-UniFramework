@@ -613,6 +613,7 @@ namespace SisyphusFramework.GUI.Popup
     private async void FadeOutAndDestroy(GameObject screen)
     {
         UniTaskCompletionSource<bool> tcs = new UniTaskCompletionSource<bool>();
+        #if DOTWEEN
         CanvasGroup canvasGroup = screen.GetComponent<CanvasGroup>() ?? screen.AddComponent<CanvasGroup>();
         canvasGroup.DOFade(0, fadeDuration).OnComplete(() =>
         {
@@ -620,14 +621,22 @@ namespace SisyphusFramework.GUI.Popup
             _state = State.Ready;
             tcs.TrySetResult(true);
         });
-
         await tcs.Task;
 
+        #else
+        Debug.LogError("You don't have Dotween. The Tween for Fading will not run correctly");
+        tcs.TrySetResult(true);
+        await tcs.Task;
+
+        #endif
     }
     #else
         private async void FadeOutAndDestroy(GameObject screen)
     {
         TaskCompletionSource<bool> tcs = new TaskCompletionSource<bool>();
+
+        #if DOTWEEN
+
         CanvasGroup canvasGroup = screen.GetComponent<CanvasGroup>() ?? screen.AddComponent<CanvasGroup>();
         canvasGroup.DOFade(0, fadeDuration).OnComplete(() =>
         {
@@ -637,6 +646,13 @@ namespace SisyphusFramework.GUI.Popup
         });
 
         await tcs.Task;
+
+        #else
+        Debug.LogError("You don't have Dotween. The Tween for Fading will not run correctly");
+        tcs.TrySetResult(true);
+        await tcs.Task;
+
+        #endif
 
     }
 #endif
