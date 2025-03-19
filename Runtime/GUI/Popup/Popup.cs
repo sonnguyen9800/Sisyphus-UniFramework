@@ -157,7 +157,7 @@ namespace SisyphusFramework.GUI.Popup
 
         public void Close()
         {
-            PopupManager<TPopupName, TPopupItem>.Instance.QueuePop(null);
+            APopupManager<TPopupName, TPopupItem>.Instance.QueuePop(null);
         }
     }
 }

@@ -8,16 +8,14 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using UnityCommunity.UnitySingleton;
-using UnityEngine.Serialization;
 using Object = UnityEngine.Object;
 
 namespace SisyphusFramework.GUI.Popup
 {
-    public abstract class PopupManager<TPopupName, TPopupItem> : MonoSingleton<PopupManager<TPopupName, TPopupItem>>
+    public abstract class APopupManager<TPopupName, TPopupItem> : MonoSingleton<APopupManager<TPopupName, TPopupItem>>
         where TPopupName : struct, Enum
         where TPopupItem : APopupItem<TPopupName>
 
@@ -614,25 +612,13 @@ namespace SisyphusFramework.GUI.Popup
             }
         }
 
-        private async void FadeOutAndDestroy(GameObject screen)
+        protected void SetStateReady(GameObject screen)
         {
-            UniTaskCompletionSource<bool> tcs = new UniTaskCompletionSource<bool>();
-#if DOTWEEN
-            CanvasGroup canvasGroup = screen.GetComponent<CanvasGroup>() ?? screen.AddComponent<CanvasGroup>();
-            canvasGroup.DOFade(0, fadeDuration).OnComplete(() =>
-            {
-                Destroy(screen);
-                _state = State.Ready;
-                tcs.TrySetResult(true);
-            });
-            await tcs.Task;
+            Destroy(screen);
 
-
-#else
-        Debug.LogError("You don't have Dotween. The Tween for Fading will not run correctly");
-        tcs.TrySetResult(true);
-        await tcs.Task;
-#endif
+            _state = State.Ready;
         }
+
+        protected abstract void FadeOutAndDestroy(GameObject screen);
     }
 }
