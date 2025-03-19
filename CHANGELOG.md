@@ -1,6 +1,6 @@
 ﻿<h1> Change log </h1>
 
-0.0.4
+0.0.40
 * Add Popup System
 * Add Tutorial System
 * Add DataHub System & Data Viewer Module
