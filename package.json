@@ -1,6 +1,6 @@
 {
     "name": "com.sisyphuslab.sisyphusframework",
-    "version": "0.0.42",
+    "version": "0.0.44",
     "displayName": "Sisyphus Framework",
     "description": "A collection of useful utilities for Unity development.",
     "unity": "2022.3",
