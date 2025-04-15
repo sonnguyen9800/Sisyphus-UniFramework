@@ -6,9 +6,7 @@
 using System;
 using UnityEngine;
 using UnityEngine.UI;
-using System.Collections;
 using System.Collections.Generic;
-using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using UnityCommunity.UnitySingleton;
 using Object = UnityEngine.Object;
@@ -22,40 +20,7 @@ namespace SisyphusFramework.GUI.Popup
 
     {
         public const string Version = "1.0.0";
-
-        private abstract class QueuedScreen
-        {
-            public string PopupName;
-        }
-
-
-        private class QueuedScreenPush : QueuedScreen
-        {
-            public Popup<TPopupName, TPopupItem>.Data data;
-            public string prefabName;
-            public PushedDelegate callback;
-
-            public override string ToString()
-            {
-                return string.Format("[Push] {0}", prefabName);
-            }
-        }
-
-
-        private class QueuedScreenPop : QueuedScreen
-        {
-            public PoppedDelegate callback;
-
-            public override string ToString()
-            {
-                return string.Format("[Pop] {0}", PopupName);
-            }
-        }
-
-        public delegate void PushedDelegate(Popup<TPopupName, TPopupItem> popup);
-
-        public delegate void PoppedDelegate(string name);
-
+        
 
         [SerializeField] private APopupDatabase<TPopupName, TPopupItem> aPopupDatabase = null;
         public Canvas rootCanvas;
@@ -67,9 +32,9 @@ namespace SisyphusFramework.GUI.Popup
         public bool inputOrderFixEnabled = true;
 
         private CanvasScaler _rootCanvasScalar;
-        private Dictionary<string, Popup<TPopupName, TPopupItem>> _cache;
+        private Dictionary<string, Popup> _cache;
         private Queue<QueuedScreen> _queue;
-        private List<Popup<TPopupName, TPopupItem>> _stack;
+        private List<Popup> _stack;
         private HashSet<string> _stackIdSet;
         private State _state;
 
@@ -97,9 +62,9 @@ namespace SisyphusFramework.GUI.Popup
             //         string.Format("{0} must have a CanvasScalar component attached to it for UIManager.", rootCanvas.name));
             // }
 
-            _cache = new Dictionary<string, Popup<TPopupName, TPopupItem>>();
+            _cache = new Dictionary<string, Popup>();
             _queue = new Queue<QueuedScreen>();
-            _stack = new List<Popup<TPopupName, TPopupItem>>();
+            _stack = new List<Popup>();
             _state = State.Ready;
 
         }
@@ -110,7 +75,7 @@ namespace SisyphusFramework.GUI.Popup
         /// Queue the screen to be pushed onto the screen stack. 
         /// Callback will be invoked when the screen is pushed to the stack.
         /// </summary>
-        public void QueuePush(Popup<TPopupName, TPopupItem>.Data data, string prefabName = null,
+        public void QueuePush(PopupParamData data, string prefabName = null,
             PushedDelegate callback = null)
         {
             string prefab = prefabName;
@@ -132,9 +97,9 @@ namespace SisyphusFramework.GUI.Popup
             //}
 
             QueuedScreenPush push = new QueuedScreenPush();
-            push.data = data;
-            push.prefabName = prefab;
-            push.callback = callback;
+            push.Data = data;
+            push.PrefabName = prefab;
+            push.Callback = callback;
 
             _queue.Enqueue(push);
 
@@ -214,7 +179,7 @@ namespace SisyphusFramework.GUI.Popup
             DebugPrintQueue(string.Format("[UIManager] QueuePop"));
 #endif
 
-            Popup<TPopupName, TPopupItem> topPopup = GetTopScreen();
+            Popup topPopup = GetTopScreen();
             if (topPopup == null)
                 return;
 
@@ -238,7 +203,7 @@ namespace SisyphusFramework.GUI.Popup
                 ExecuteNextQueueItem();
         }
 
-        public Popup<TPopupName, TPopupItem> GetTopScreen()
+        public Popup GetTopScreen()
         {
             if (_stack.Count > 0)
                 return _stack[0];
@@ -246,7 +211,7 @@ namespace SisyphusFramework.GUI.Popup
             return null;
         }
 
-        public Popup<TPopupName, TPopupItem> GetScreen(string id)
+        public Popup GetScreen(string id)
         {
             int count = _stack.Count;
             for (int i = 0; i < count; i++)
@@ -258,9 +223,9 @@ namespace SisyphusFramework.GUI.Popup
             return null;
         }
 
-        public T GetScreen<T>(string id) where T : Popup<TPopupName, TPopupItem>
+        public T GetScreen<T>(string id) where T : Popup
         {
-            Popup<TPopupName, TPopupItem> popup = GetScreen(id);
+            Popup popup = GetScreen(id);
             return (T)popup;
         }
 
@@ -319,12 +284,12 @@ namespace SisyphusFramework.GUI.Popup
             {
                 // Push screen.
                 QueuedScreenPush queuedPush = (QueuedScreenPush)queued;
-                Popup<TPopupName, TPopupItem> popupInstance;
+                Popup popupInstance;
 
-                if (_cache.TryGetValue(queuedPush.prefabName, out popupInstance))
+                if (_cache.TryGetValue(queuedPush.PrefabName, out popupInstance))
                 {
                     // Use cached instance of screen.
-                    _cache.Remove(queuedPush.prefabName);
+                    _cache.Remove(queuedPush.PrefabName);
 
 #if PRINT_CACHE
                     DebugPrintCache(string.Format("[UIManager] Screen retrieved from Cache: {0}", queuedPush.prefabName));
@@ -337,34 +302,34 @@ namespace SisyphusFramework.GUI.Popup
 
                     FadeIn(popupInstance.gameObject, () =>
                     {
-                        popupInstance.Setup(queuedPush.prefabName);
+                        popupInstance.Setup(queuedPush.PrefabName);
 
                     });
                 }
                 else
                 {
 
-                    if (Enum.TryParse(queuedPush.prefabName, out TPopupName popupName))
+                    if (Enum.TryParse(queuedPush.PrefabName, out TPopupName popupName))
                     {
 
                         var prefab = aPopupDatabase.GetByType(popupName);
 
                         if (prefab == null)
                         {
-                            Debug.LogWarning("Game object of popup " + queuedPush.prefabName + " not existed");
+                            Debug.LogWarning("Game object of popup " + queuedPush.PrefabName + " not existed");
 
                         }
 
                         popupInstance = Object.Instantiate(prefab, rootCanvas.transform)
-                            .GetComponent<Popup<TPopupName, TPopupItem>>();
+                            .GetComponent<Popup>();
                         FadeIn(popupInstance.gameObject, () =>
                         {
-                            popupInstance.Setup(queuedPush.prefabName);
+                            popupInstance.Setup(queuedPush.PrefabName);
                         });
                     }
                     else
                     {
-                        Debug.LogWarning("Popup: " + queuedPush.prefabName + " not existed");
+                        Debug.LogWarning("Popup: " + queuedPush.PrefabName + " not existed");
                     }
 
                 }
@@ -389,14 +354,14 @@ namespace SisyphusFramework.GUI.Popup
                 _state = State.Push;
                 _stack.Insert(0, popupInstance);
 
-                _activePushCallback = queuedPush.callback;
+                _activePushCallback = queuedPush.Callback;
 
 #if PRINT_STACK
                 DebugPrintStack(string.Format("[UIManager] Pushing Screen: {0}, Frame: {1}", queued.id, Time.frameCount));
 #endif
 
                 popupInstance.onPushFinished += HandlePushFinished;
-                popupInstance.OnPush(queuedPush.data);
+                popupInstance.OnPush(queuedPush.Data);
 
                 if (_queue.Count == 0)
                 {
@@ -412,7 +377,7 @@ namespace SisyphusFramework.GUI.Popup
             {
                 // Pop screen.
                 QueuedScreenPop queuedPop = (QueuedScreenPop)queued;
-                Popup<TPopupName, TPopupItem> popupToPop = GetTopScreen();
+                Popup popupToPop = GetTopScreen();
 
                 if (popupToPop.Id != queued.PopupName)
                 {
@@ -463,7 +428,7 @@ namespace SisyphusFramework.GUI.Popup
             int childCount = this.rootCanvas.transform.childCount;
             for (int i = 0; i < childCount; i++)
             {
-                var screen = this.rootCanvas.transform.GetChild(i).GetComponent<Popup<TPopupName, TPopupItem>>();
+                var screen = this.rootCanvas.transform.GetChild(i).GetComponent<Popup>();
                 if (screen != null)
                 {
                     var canvas = screen.GetComponent<Canvas>();
@@ -538,7 +503,7 @@ namespace SisyphusFramework.GUI.Popup
 
             sb.AppendLine("[UIManager Screen Cache]");
 
-            foreach (KeyValuePair<string, Popup<TPopupName, TPopupItem>> cached in _cache)
+            foreach (KeyValuePair<string, Popup> cached in _cache)
             {
                 sb.AppendLine(cached.Key);
             }
@@ -546,7 +511,7 @@ namespace SisyphusFramework.GUI.Popup
             Debug.Log(sb.ToString());
         }
 
-        private void HandlePushFinished(Popup<TPopupName, TPopupItem> popup)
+        private void HandlePushFinished(Popup popup)
         {
             popup.onPushFinished -= HandlePushFinished;
 
@@ -562,7 +527,7 @@ namespace SisyphusFramework.GUI.Popup
                 ExecuteNextQueueItem();
         }
 
-        private void HandlePopFinished(Popup<TPopupName, TPopupItem> popup)
+        private void HandlePopFinished(Popup popup)
         {
             popup.onPopFinished -= HandlePopFinished;
 
@@ -613,8 +578,6 @@ namespace SisyphusFramework.GUI.Popup
             {
                 callback?.Invoke();
             }));
-            
-
         }
 
         protected void SetStateReady(GameObject screen)
