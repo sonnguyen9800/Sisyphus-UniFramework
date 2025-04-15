@@ -1,6 +1,11 @@
 # Sisyphus-UniFramework
 A custom library for Unity (C#)
 
+# Prerequisites
+- Dotween
+- UniTask
+- TextMeshPro
+
 # Install?
 Add git link: 
 ```

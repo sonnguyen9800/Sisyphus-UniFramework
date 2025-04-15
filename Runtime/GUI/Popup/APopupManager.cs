@@ -334,8 +334,12 @@ namespace SisyphusFramework.GUI.Popup
                     popupInstance.transform.SetAsLastSibling();
 
                     popupInstance.gameObject.SetActive(true);
-                    StartCoroutine(FadeIn(popupInstance.gameObject));
 
+                    FadeIn(popupInstance.gameObject, () =>
+                    {
+                        popupInstance.Setup(queuedPush.prefabName);
+
+                    });
                 }
                 else
                 {
@@ -353,8 +357,10 @@ namespace SisyphusFramework.GUI.Popup
 
                         popupInstance = Object.Instantiate(prefab, rootCanvas.transform)
                             .GetComponent<Popup<TPopupName, TPopupItem>>();
-                        StartCoroutine(FadeIn(popupInstance.gameObject));
-                        popupInstance.Setup(queuedPush.prefabName);
+                        FadeIn(popupInstance.gameObject, () =>
+                        {
+                            popupInstance.Setup(queuedPush.prefabName);
+                        });
                     }
                     else
                     {
@@ -597,19 +603,18 @@ namespace SisyphusFramework.GUI.Popup
 
 
 
-        private IEnumerator FadeIn(GameObject screen)
+        private void FadeIn(GameObject screen, Action callback = null)
         {
             CanvasGroup canvasGroup = screen.GetComponent<CanvasGroup>() ?? screen.AddComponent<CanvasGroup>();
             canvasGroup.alpha = 0;
             screen.SetActive(true);
 
-            float elapsed = 0f;
-            while (elapsed < fadeDuration)
+            canvasGroup.DOFade(1, fadeDuration).OnComplete((() =>
             {
-                elapsed += Time.deltaTime;
-                canvasGroup.alpha = Mathf.Clamp01(elapsed / fadeDuration);
-                yield return null;
-            }
+                callback?.Invoke();
+            }));
+            
+
         }
 
         protected void SetStateReady(GameObject screen)
