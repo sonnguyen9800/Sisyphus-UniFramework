@@ -11,18 +11,31 @@ namespace SisyphusFramework.GUI.Popup
         
         public string PrefabName { get; private set; }
 
-        public bool keepCached = false;
+        public bool keepCached = true;
         public bool overrideManagedSorting;
         public int overrideSortValue;
         
         public event ScreenDelegate onPushFinished;
         public event ScreenDelegate onPopFinished;
 
+        private CanvasGroup _canvasGroup;
+        private float _oldAlpha;
         public void Setup(string prefabName)
         {
             PrefabName = prefabName;
 
             OnSetup();
+            _canvasGroup = GetComponent<CanvasGroup>();
+            _oldAlpha = _canvasGroup.alpha;
+            
+        }
+
+        private void Update()
+        {
+            if (_oldAlpha != _canvasGroup.alpha)
+            {
+                Debug.LogError("Alpha changed: " + _canvasGroup.alpha);
+            }
         }
 
         /// <summary>
@@ -67,7 +80,7 @@ namespace SisyphusFramework.GUI.Popup
             
         }
 
-        protected void PopFinished ()
+        private void PopFinished ()
         {
             if (onPopFinished != null)
                 onPopFinished(this);
@@ -75,7 +88,7 @@ namespace SisyphusFramework.GUI.Popup
 
         public void Close()
         {
-            //APopupManager<TPopupName, TPopupItem>.Instance.QueuePop(null);
+            APopupManager.Instance.QueuePop(null);
         }
     }
 }

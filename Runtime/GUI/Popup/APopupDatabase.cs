@@ -13,11 +13,28 @@ namespace SisyphusFramework.GUI.Popup
         
     }
     [CreateAssetMenu(menuName = "SisyphusFramework/Popup Database")]
-    public abstract class APopupDatabase<TPopupName, TPopupItem> : AScriptableDatabase<TPopupName, TPopupItem, GameObject>
-    where TPopupName : Enum
+    public abstract class APopupDatabase<TPopupName, TPopupItem>
+        : AScriptableDatabase<TPopupName, TPopupItem, GameObject>,
+        IPopupDatabase
+    where TPopupName : struct, Enum
     where TPopupItem : APopupItem<TPopupName>
     {
-    
-        
+        public GameObject GetPopupByName(string name)
+        {
+            if (!Enum.TryParse(name, out TPopupName popupName))
+                return null;
+            var prefab = GetByType(popupName);
+            if (prefab == null)
+            {
+                Debug.LogError($"Popup prefab not found for name: {name}");
+                return null;
+            }
+            return prefab;
+        }
+    }
+
+    public interface IPopupDatabase
+    {
+        public GameObject GetPopupByName(string name);
     }
 }

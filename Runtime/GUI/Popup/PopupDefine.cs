@@ -2,14 +2,21 @@
 
 namespace SisyphusFramework.GUI.Popup
 {
+    
+    public enum State
+    {
+        Ready,
+        Push,
+        Pop
+    }
     public delegate void PoppedDelegate(string name);
     public delegate void PushedDelegate(Popup popup);
     public delegate void ScreenDelegate (Popup popup);
-    public abstract class QueuedScreen
+    public abstract class QueuedAction
     {
         public string PopupName;
     }
-    public class QueuedScreenPush : QueuedScreen
+    public class QueuedActionPush : QueuedAction
     {
         public PopupParamData Data;
         public string PrefabName;
@@ -22,7 +29,7 @@ namespace SisyphusFramework.GUI.Popup
     }
 
 
-    public class QueuedScreenPop : QueuedScreen
+    public class QueuedActionPop : QueuedAction
     {
         public PoppedDelegate callback;
 
