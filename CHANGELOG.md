@@ -1,4 +1,6 @@
 ﻿<h1> Change log </h1>
+0.0.49
+* Remove logs
 0.0.48
 * Fix bug in PopupManager. Refactor code.
 0.0.47
