@@ -17,26 +17,16 @@ namespace SisyphusFramework.GUI.Popup
         
         public event ScreenDelegate onPushFinished;
         public event ScreenDelegate onPopFinished;
-
-        private CanvasGroup _canvasGroup;
-        private float _oldAlpha;
+        
         public void Setup(string prefabName)
         {
             PrefabName = prefabName;
 
             OnSetup();
-            _canvasGroup = GetComponent<CanvasGroup>();
-            _oldAlpha = _canvasGroup.alpha;
             
         }
 
-        private void Update()
-        {
-            if (_oldAlpha != _canvasGroup.alpha)
-            {
-                Debug.LogError("Alpha changed: " + _canvasGroup.alpha);
-            }
-        }
+
 
         /// <summary>
         /// Setup is called after instantiating a Screen prefab. It is only called once for the lifecycle of the Screen.

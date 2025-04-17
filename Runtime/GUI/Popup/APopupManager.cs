@@ -181,8 +181,8 @@ namespace SisyphusFramework.GUI.Popup
                 popupInstance.transform.SetAsLastSibling();
 
                 popupInstance.gameObject.SetActive(true);
-                popupInstance.Setup(queuedPush.PrefabName);
-                //FadeIn(popupInstance.gameObject, () => { popupInstance.Setup(queuedPush.PrefabName); });
+                //popupInstance.Setup(queuedPush.PrefabName);
+                FadeIn(popupInstance.gameObject, () => { popupInstance.Setup(queuedPush.PrefabName); });
             }
             else
             {
@@ -195,8 +195,8 @@ namespace SisyphusFramework.GUI.Popup
 
                 popupInstance = Object.Instantiate(prefab, rootCanvas.transform)
                     .GetComponent<Popup>();
-                popupInstance.Setup(queuedPush.PrefabName);
-                //FadeIn(popupInstance.gameObject, () => { popupInstance.Setup(queuedPush.PrefabName); });
+                //popupInstance.Setup(queuedPush.PrefabName);
+                FadeIn(popupInstance.gameObject, () => { popupInstance.Setup(queuedPush.PrefabName); });
             }
 
             if (this.inputOrderFixEnabled)
@@ -375,8 +375,8 @@ namespace SisyphusFramework.GUI.Popup
             else
             {
                 // Destroy screen.
-                //FadeOutAndDestroy(popup.gameObject);
-                SetStateReady(popup.gameObject);
+                FadeOutAndDestroy(popup.gameObject);
+                //SetStateReady(popup.gameObject);
                 //tcs.TrySetResult(true);
             }
 
@@ -403,6 +403,6 @@ namespace SisyphusFramework.GUI.Popup
         }
 
         protected abstract void FadeOutAndDestroy(GameObject screen);
-        
+        protected abstract void FadeIn(GameObject screen, Action onComplete);
     }
 }
