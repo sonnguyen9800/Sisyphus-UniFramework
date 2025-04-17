@@ -128,7 +128,6 @@ namespace SisyphusFramework.GUI.Popup
 
         public Popup GetTopScreen()
         {
-            Debug.LogError("Current Stack Count: " + _stackPopup.Count);
             if (_stackPopup.Count > 0)
                 return _stackPopup[0];
 
@@ -241,7 +240,6 @@ namespace SisyphusFramework.GUI.Popup
 
         private void HandleQueuePop(QueuedAction queued)
         {
-            Debug.Log("Handle Queue Pop"  + queued.PopupName);
             // Pop screen.
             QueuedActionPop queuedPop = (QueuedActionPop)queued;
             Popup popupToPop = GetTopScreen();
@@ -338,7 +336,6 @@ namespace SisyphusFramework.GUI.Popup
 
         private void HandlePushFinished(Popup popup)
         {
-            Debug.LogError("Handle Push Finished");
             popup.onPushFinished -= HandlePushFinished;
 
             _state = State.Ready;
